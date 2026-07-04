@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  postgress-db:
+    image: postgres:16-alpine
+    container_name: tarefas_postgres_local
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 1001
+      POSTGRES_DB: tarefas_db
+    ports: 
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/postgres/data
+
+volumes:
+  postgres_data: {}
