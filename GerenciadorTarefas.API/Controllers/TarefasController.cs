@@ -19,6 +19,13 @@ namespace GerenciadorTarefas.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Criar(Tarefa novaTarefa)
         {
+
+            var projetoExiste = await _context.Projetos.AnyAsync(p => p.Id == novaTarefa.ProjetoId);
+
+            if (!projetoExiste)
+            {
+                return BadRequest(new { mensagem = "Não é possível criar a tarefa pois o ProjetoId informado não existe." });
+            }
             _context.Tarefas.Add(novaTarefa);
             await _context.SaveChangesAsync();
             return Ok(novaTarefa);

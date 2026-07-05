@@ -10,5 +10,6 @@ namespace GerenciadorTarefas.API.Context
         }
 
         public DbSet<Tarefa> Tarefas { get; set; }
+        public DbSet<Projeto> Projetos { get; set; }
     }
 }

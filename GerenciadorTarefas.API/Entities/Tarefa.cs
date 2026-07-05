@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json.Serialization;
 
 namespace GerenciadorTarefas.API.Entities
 {
@@ -11,5 +12,11 @@ namespace GerenciadorTarefas.API.Entities
         public DateTime DataCriacao { get; set; } = DateTime.UtcNow;
         public DateTime? DataVencimento { get; set; }
         public StatusTarefa Status { get; set; } = StatusTarefa.Pendente;
+
+        public Guid ProjetoId { get; set; }
+
+        [JsonIgnore]
+        public Projeto? Projeto { get; set; }
     }
+    
 }
