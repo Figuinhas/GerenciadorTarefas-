@@ -39,5 +39,37 @@ namespace GerenciadorTarefas.API.Controllers
             }
             return Ok(tarefa);
         }
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> Atualizar(Guid id, Tarefa tarefaAtualizada)
+        {
+            var tarefaBanco = await _context.Tarefas.FindAsync(id);
+
+            if (tarefaBanco == null)
+            {
+                return NotFound(new { message = "Tarefa não encontrada para atualizar." });
+            }
+
+            tarefaBanco.Titulo = tarefaAtualizada.Titulo;
+            tarefaBanco.Descricao = tarefaAtualizada.Descricao;
+            tarefaBanco.DataVencimento = tarefaAtualizada.DataVencimento;
+            tarefaBanco.Status = tarefaAtualizada.Status;
+
+            await _context.SaveChangesAsync();
+            return Ok(tarefaBanco);
+        }
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> Deletar(Guid id)
+        {
+            var tarefaBanco = await _context.Tarefas.FindAsync(id);
+            if (tarefaBanco == null)
+            {
+                return NotFound(new { message = "Tarefa não encontrada para exclusão." });
+            }
+
+            _context.Tarefas.Remove(tarefaBanco);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
     }
 }
